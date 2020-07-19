@@ -1,7 +1,7 @@
 package com.example.demo.loginsocial.config;
 
-import com.example.demo.loginsocial.service.FacebookConnectionSignup;
-import com.example.demo.loginsocial.service.FacebookSignInAdapter;
+import com.example.demo.loginsocial.service.GoogleConnectionSignup;
+import com.example.demo.loginsocial.service.GoogleSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,24 +17,24 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ProviderSignInController;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
 
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = { "com.example.demo.loginsocial.service" })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${spring.social.facebook.appSecret}")
+	@Value("${spring.social.google.appSecret}")
 	String appSecret;
 
-	@Value("${spring.social.facebook.appId}")
+	@Value("${spring.social.google.appId}")
 	String appId;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Autowired
-	private FacebookConnectionSignup facebookConnectionSignup;
+	private GoogleConnectionSignup googleConnectionSignup;
 
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -60,13 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public ProviderSignInController providerSignInController() {
 		ConnectionFactoryLocator connectionFactoryLocator = connectionFactoryLocator();
 		UsersConnectionRepository usersConnectionRepository = getUsersConnectionRepository(connectionFactoryLocator);
-		((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignup);
-		return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter());
+		((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(googleConnectionSignup);
+		return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new GoogleSignInAdapter());
 	}
 
 	private ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-		registry.addConnectionFactory(new FacebookConnectionFactory(appId, appSecret));
+		registry.addConnectionFactory(new GoogleConnectionFactory(appId, appSecret));
 		return registry;
 	}
 

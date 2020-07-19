@@ -10,7 +10,7 @@ import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FacebookConnectionSignup implements ConnectionSignUp {
+public class GoogleConnectionSignup implements ConnectionSignUp {
 
 	@Autowired
 	private UserRepository userRepository;

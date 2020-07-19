@@ -8,7 +8,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
-public class FacebookSignInAdapter implements SignInAdapter {
+public class GoogleSignInAdapter implements SignInAdapter {
 
 	@Override
 	public String signIn(
@@ -19,7 +19,7 @@ public class FacebookSignInAdapter implements SignInAdapter {
 		SecurityContextHolder.getContext().setAuthentication(
 			new UsernamePasswordAuthenticationToken(
 				connection.getDisplayName(), null,
-				Arrays.asList(new SimpleGrantedAuthority("FACEBOOK_USER"))));
+				Arrays.asList(new SimpleGrantedAuthority("GOOGLE_USER"))));
 
 		return null;
 	}
